@@ -1,0 +1,58 @@
+<html>
+  <head></head>
+  <body>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <a [routerLink]="''" [style.color]="'white'">Logo</a>
+        <div
+          *ngIf="this.userInfo?.username === 'admin'"
+          [routerLink]="'/admin/userManager'"
+          class="right"
+          [style.cursor]="'pointer'"
+          [style.background-color]="'#0d05ff'"
+        >
+          <span>{{ userInfo?.username }}</span>
+        </div>
+        <div
+          *ngIf="this.userInfo?.id !== 0 && this.userInfo?.username !== 'admin'"
+          [routerLink]="'/user/profile'"
+          class="right"
+          [style.cursor]="'pointer'"
+          [style.background-color]="'#0d05ff'"
+        >
+          <span>{{ userInfo?.username }}</span>
+        </div>
+        <div
+          *ngIf="this.userInfo?.id !== 0"
+          (click)="logOut()"
+          class="right"
+          [style.right]="'129px'"
+          [style.cursor]="'pointer'"
+          [style.background-color]="'#d90404'"
+        >
+          Log out
+        </div>
+        <div
+          *ngIf="!(this.userInfo?.id !== 0) && userIsLoggedIn"
+          (click)="openRegisterDialog()"
+          class="right"
+          [style.cursor]="'pointer'"
+          [style.background-color]="'#0d05ff'"
+        >
+          Register
+        </div>
+        <div
+          *ngIf="!(this.userInfo?.id !== 0) && userIsLoggedIn"
+          (click)="openLoginDialog()"
+          class="right"
+          [style.cursor]="'pointer'"
+          [style.right]="'129px'"
+          [style.background-color]="'#0d05ff'"
+        >
+          Log in
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </body>
+</html>

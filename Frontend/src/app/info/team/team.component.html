@@ -1,0 +1,185 @@
+<mat-grid-list
+  cols="5"
+  rowHeight="200"
+  style="margin-bottom: 5rem"
+  *ngIf="team"
+>
+  <mat-grid-tile>
+    <div>
+      <p class="username">
+        <b>{{ team.name }}</b>
+      </p>
+      <img
+        class="center"
+        [style.width]="'125px'"
+        [style.height]="'125px'"
+        src="{{ team.logo }}"
+      />
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <p
+      class="center"
+      style="
+        position: absolute;
+        top: 56px;
+        font-size: large;
+        text-decoration: underline;
+      "
+    >
+      <b>Tournament trophies</b>
+    </p>
+    <div class="center" style="position: absolute; top: 90px">
+      <img
+        [style.width]="'40px'"
+        [style.height]="'40px'"
+        src="https://us.123rf.com/450wm/barks/barks1712/barks171200548/91810358-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-oro-1er-lugar-.jpg?ver=6"
+      />
+      <b style="font-size: 20px">{{ team.gold }}</b>
+      <img
+        [style.margin]="'0 0 0 25px'"
+        [style.width]="'40px'"
+        [style.height]="'40px'"
+        src="https://us.123rf.com/450wm/barks/barks1712/barks171200558/91752771-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-plata-2do-lugar-.jpg"
+      />
+      <b style="font-size: 20px">{{ team.silver }}</b>
+      <img
+        [style.margin]="'0 0 0 25px'"
+        [style.width]="'40px'"
+        [style.height]="'40px'"
+        src="https://us.123rf.com/450wm/barks/barks1712/barks171200566/91807719-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-bronce-3er-lugar-.jpg?ver=6"
+      />
+      <b style="font-size: 20px">{{ team.bronze }}</b>
+    </div>
+
+    <div class="center" style="position: absolute; top: 150px; font-size: 17px">
+      <b>Number of wins: </b>{{ team.numberOfWins }} <br />
+      <b>Number of games: </b>{{ team.numberOfGames }}
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 80px; top: 60px"
+      class="center"
+    >
+      <mat-form-field id:team-name appearance="fill" [floatLabel]="'always'">
+        <mat-label>Team name</mat-label>
+        <form [formGroup]="teamForm">
+          <input
+            matInput
+            id="name"
+            required
+            formControlName="name"
+            placeholder="{{ team.name }}"
+          />
+        </form>
+      </mat-form-field>
+
+      <mat-form-field id:team-photo appearance="fill">
+        <img
+          matPrefix
+          class="input-icon"
+          src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+          width="24px"
+          height="24px"
+        />
+        <mat-label>Photo</mat-label>
+        <form [formGroup]="teamForm">
+          <input matInput type="Photo" formControlName="logo" />
+        </form>
+      </mat-form-field>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 60px; top: 150px"
+    >
+      <button
+        mat-raised-button
+        (click)="updateTeam()"
+        [disabled]="teamForm.invalid"
+      >
+        Change
+      </button>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile></mat-grid-tile>
+
+  <mat-grid-tile>
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 80px; top: 75px"
+    >
+      <mat-form-field id:add-player appearance="fill">
+        <mat-label>Player username</mat-label>
+        <form [formGroup]="userForm">
+          <input matInput required id="username" formControlName="username" />
+        </form>
+      </mat-form-field>
+    </div>
+
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 128px; top: 150px"
+    >
+      <button
+        mat-raised-button
+        (click)="addPlayer()"
+        [disabled]="userForm.invalid"
+      >
+        Add
+      </button>
+    </div>
+
+    <div
+      *ngIf="!(this.loggedUser.username == this.owner) && this.isMember"
+      style="position: absolute; left: 80px; top: 50px"
+    >
+      <button
+        mat-raised-button
+        [style.background-color]="'red'"
+        (click)="leaveTeam(this.loggedUser.username)"
+      >
+        Leave
+      </button>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-card
+  *ngFor="let player of playerList"
+  [style.cursor]="'pointer'"
+  [style.margin]="'0 0 4px 4rem'"
+>
+  <mat-card-header (click)="userInfo(player.id)">
+    <mat-card-title-group>
+      <img
+        mat-card-avatar
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+      />
+      <mat-card-title class="label-name">{{ player.username }}</mat-card-title>
+    </mat-card-title-group>
+  </mat-card-header>
+  <button
+    mat-button
+    *ngIf="
+      !(this.owner == player.username) && this.loggedUser.username == this.owner
+    "
+    (click)="deletePlayer(player.username)"
+  >
+    Remove
+  </button>
+  <div
+    class="label-owner"
+    (click)="userInfo(player.id)"
+    *ngIf="this.owner == player.username"
+  >
+    <b>OWNER</b>
+  </div>
+</mat-card>

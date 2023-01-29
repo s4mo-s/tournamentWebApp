@@ -1,0 +1,111 @@
+<mat-sidenav-container>
+  <!-- This is your sidenav -->
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/user/profile'"> Profile </a>
+      <a
+        mat-list-item
+        [routerLink]="'/user/teams'"
+        routerLinkActive="active-list-item"
+      >
+        Teams
+      </a>
+      <a mat-list-item [routerLink]="'/user/tournaments'"> Tournamets </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content or body of your page-->
+  <mat-sidenav-content>
+    <div style="height: 93vh">
+      <mat-grid-list cols="5" rowHeight="200" style="margin-bottom: 2rem">
+        <mat-grid-tile>
+          <div class="profile_photo">
+            <img
+              [style.width]="'125px'"
+              [style.height]="'125px'"
+              src="https://www.pngkey.com/png/detail/66-661551_white-blank-shield-logo-school-logo-template-free.png"
+            />
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field id:team-name appearance="fill">
+              <mat-label>Team name</mat-label>
+              <form [formGroup]="teamForm">
+                <input matInput id="name" formControlName="name" required />
+              </form>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field id:team-photo appearance="fill">
+              <img
+                matPrefix
+                class="input-icon"
+                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+                width="24px"
+                height="24px"
+              />
+              <mat-label>Photo</mat-label>
+              <form [formGroup]="teamForm">
+                <input matInput type="Photo" formControlName="logo" />
+              </form>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <button
+            mat-raised-button
+            [disabled]="teamForm.invalid"
+            (click)="createTeam()"
+          >
+            Create
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-card
+        *ngFor="let team of teamList"
+        [style.cursor]="'pointer'"
+        [style.margin]="'0 0 4px 3rem'"
+      >
+        <mat-card-content (click)="info(team.id)">
+          <mat-card-header>
+            <mat-card-title-group>
+              <img mat-card-avatar src="{{ team.logo }}" />
+              <mat-card-title class="label-name">
+                {{ team.name }}
+                <p
+                  *ngIf="this.loggedUser.id == team.ownerId"
+                  style="font-size: 11px; color: blue"
+                >
+                  OWNER
+                </p>
+              </mat-card-title>
+            </mat-card-title-group>
+            <mat-card-content class="label-capacity">
+              {{team.numberOfPlayers}}/{{team.capacity}}
+            </mat-card-content>
+          </mat-card-header>
+        </mat-card-content>
+        <mat-card-footer>
+          <button
+            *ngIf="this.loggedUser.id == team.ownerId"
+            mat-button
+            (click)="deleteTeam(team.name)"
+          >
+            Delete
+          </button>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

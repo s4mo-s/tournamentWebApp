@@ -1,0 +1,38 @@
+.username {
+  margin-top: 20px;
+  text-align: center;
+  font-size: x-large;
+  color: blue;
+}
+
+.mat-button {
+  position: absolute;
+  background-color: red;
+  color: white;
+  height: 35px;
+  top: 20px;
+  left: 387px;
+  border-radius: 2em;
+}
+
+.label-name {
+  position: absolute;
+  left: 100px;
+  top: 22px;
+}
+
+.label-owner {
+  position: absolute;
+  top: 25px;
+  left: 400px;
+}
+
+mat-card {
+  border: 2px solid #006dcc;
+  max-width: 500px;
+  margin: 5px;
+}
+mat-card:hover {
+  border: 2px solid #006dcc;
+  background: lightskyblue;
+}

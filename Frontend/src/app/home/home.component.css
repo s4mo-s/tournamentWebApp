@@ -1,0 +1,101 @@
+mat-card {
+  border: 2px solid #006dcc;
+  max-width: 700px;
+}
+mat-card:hover {
+  border: 2px solid #006dcc;
+  background: lightskyblue;
+}
+
+.mat-raised-button {
+  background-color: #22afff;
+  color: white;
+  width: 160px;
+  height: 55px;
+}
+
+.container {
+  margin-top: 1cm;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px)); /*this */
+  gap: 30px;
+}
+
+.search {
+  width: 35%;
+  position: relative;
+  display: flex;
+  margin-left: 2%;
+}
+
+select {
+  width: 100%;
+  border: 3px solid #006dcc;
+  border-right: 33px solid #006dcc;
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #006dcc;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #006dcc;
+  border-right: 33px solid #006dcc;
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #006dcc;
+}
+
+.searchTerm:focus {
+  color: #00b4cc;
+}
+
+.wrap {
+  margin: 2%;
+  min-width: 180px;
+}
+
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.gray {
+  color: gray;
+}
+
+.not {
+  font-size: 30px;
+  font-family: "georgia";
+  font-weight: bold;
+  text-align: center;
+  color: #006dcc;
+}
+
+.heartB {
+  width: 8%;
+  height: auto;
+  object-fit: cover;
+  z-index: -5;
+}
+
+.heartR {
+  width: 9%;
+  height: auto;
+  object-fit: cover;
+  z-index: -5;
+}
+
+.heartB:active {
+  animation: pop 1s linear 1;
+}
+
+.heartR:active {
+  animation: pop 1s linear 1;
+}
